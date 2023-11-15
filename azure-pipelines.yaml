@@ -13,10 +13,14 @@ steps:
   submodules: true
   persistCredentials : true
 
-- task: Npm@1
-  displayName: NPM install
+- task: NodeTool@0
   inputs:
-    command: 'install --legacy-peer-deps'
+    versionSpec: '14.x'
+  displayName: 'Install Node.js'
+
+- script: npm install --legacy-peer-deps
+  displayName: 'NPM install with legacy peer dependencies'
+
 
 - task: Npm@1
   displayName: NPM build
