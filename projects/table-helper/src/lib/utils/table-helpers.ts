@@ -1,3 +1,4 @@
+import { TABLE_MATCH_MODES } from "src/app/utilities/table";
 import { ColumnMultiAndSingleSelectFilterOptions, Filter, FilterValues, SortValues } from "./table.model";
 
 export const transformSortForRequest = (criteria: SortValues[]) =>
@@ -8,17 +9,18 @@ export const transformSortForRequest = (criteria: SortValues[]) =>
 
 export const getShorthandMatchMode = (matchMode: string): string => {
   switch (matchMode) {
-    case 'startsWith':
+    case TABLE_MATCH_MODES.startsWith:
       return 'sw';
-    case 'contains':
+    case TABLE_MATCH_MODES.dateIs:
+    case TABLE_MATCH_MODES.contains:
       return 'like';
-    case 'notContains':
+    case TABLE_MATCH_MODES.notContains:
       return 'neq';
-    case 'endsWith':
+    case TABLE_MATCH_MODES.endsWith:
       return 'ew';
-    case 'equals':
+    case TABLE_MATCH_MODES.equals:
       return 'eq';
-    case 'notEquals':
+    case TABLE_MATCH_MODES.notEquals:
       return 'neq';
     default:
       return matchMode;
@@ -59,8 +61,8 @@ export const transformFiltersForRequest = (filters: FilterValues): string[] => {
 export const buildMutliAndSingleSelectFilterOptions = (
   filterOptions: string[]
 ): ColumnMultiAndSingleSelectFilterOptions[] => {
-  return filterOptions.map((filterOption: any) => ({
-    label: filterOption.name,
-    name: filterOption.name,
+  return filterOptions.map((filterOption: string) => ({
+    label: filterOption,
+    value: filterOption,
   }));
 };
