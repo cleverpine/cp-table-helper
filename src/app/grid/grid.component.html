@@ -1,0 +1,134 @@
+<p-table
+  #grid
+  [columns]="columns" 
+  [value]="data"
+  [paginator]="gridConfig.paginator"
+  [rows]="gridConfig.rows"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Showing {currentPage} of {totalPages}"
+  [rowsPerPageOptions]="gridConfig.rowsPerPageConfig"
+  [totalRecords]="gridConfig.totalRecords!"
+  sortMode="multiple"
+  styleClass="p-datatable-sm"
+  [selectionMode]="gridConfig.isRowClickable ? 'single' : null"
+  (onRowSelect)="gridConfig.isRowClickable ? handleRowClick($event) : ''"
+  [lazy]="true"
+  (onLazyLoad)="loadData($event)"
+>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <ng-container *ngFor="let col of columns">
+        <th *ngIf="col.sortable" [pSortableColumn]="col.field">
+          {{ col.header }}
+          <p-sortIcon id="{{ 'sort' + col.field }}" [field]="col.field"></p-sortIcon>
+
+          <p-columnFilter
+            *ngIf="col.type === 'date' || col.type === 'dateTime' && col.filterType !== 'dropdown'"
+            id="{{ 'filter' + col.field }}"
+            type="date"
+            display="menu"
+            field="{{ col.field }}"
+            [showMatchModes]="false"
+            [showOperator]="false"
+            [showAddButton]="false"
+          ></p-columnFilter>
+        </th>
+
+        <th *ngIf="!col.sortable" [style.width.px]="col.width" [style.text-align]="'center'">
+          {{ col.header }}
+        </th>
+      </ng-container>
+    </tr>
+
+    <tr *ngIf="!gridConfig.hideFilters">
+      <ng-container *ngFor="let col of columns">
+        <th>
+          <p-columnFilter
+            *ngIf="col.type === 'textField' && col.filterType !== 'multipleDropdown' && col.filterType !== 'singleDropdown'"
+            type="text"
+            id="{{ 'filter' + col.field }}"
+            field="{{ col.field }}"
+            [matchMode]="col.matchMode"
+          >
+          </p-columnFilter>
+
+          <p-columnFilter
+            *ngIf="col.filterType === 'multipleDropdown' || col.filterType === 'singleDropdown'"
+            field="{{ col.field }}"
+            id="{{ 'filter' + col.field }}"
+            class="hide-filter-button"
+          >
+            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+              <p-multiSelect
+                *ngIf="col.filterType === 'multipleDropdown'"
+                id="{{ 'multiselect' + col.field }}"
+                [ngModel]="value"
+                [options]="col.multiAndSingleFilterOptions"
+                placeholder="select"
+                (onChange)="filter($event.value)"
+                appendTo="body"
+              ></p-multiSelect>
+              <p-dropdown
+                *ngIf="col.filterType === 'singleDropdown'"
+                id="{{ 'singleDropdown' + col.field }}"
+                [ngModel]="value"
+                [options]="col.multiAndSingleFilterOptions"
+                placeholder="select"
+                (onChange)="filter($event.value)"
+                appendTo="body"
+              ></p-dropdown>
+            </ng-template>
+          </p-columnFilter>
+        </th>
+      </ng-container>
+    </tr>
+  </ng-template>
+  
+  <ng-template pTemplate="body" let-rowData>
+    <tr [pSelectableRow]="rowData">
+      <td *ngFor="let column of columns">
+        <ng-container *ngIf="column.type === TYPES.textField">
+          {{
+            column.propertyName
+              ? rowData[column.field][column.propertyName]
+              : rowData[column.field]
+          }}
+        </ng-container>
+
+        <ng-container *ngIf="column.type === TYPES.number">
+          <span class="number-table-data">{{ rowData[column.field] && rowData[column.field]!.toFixed(2) }}</span>
+        </ng-container>
+
+        <ng-container *ngIf="column.type === TYPES.date">
+          {{ formatDateService.formatDate(rowData[column.field]) }}
+        </ng-container>
+
+        <ng-container *ngIf="column.type === TYPES.dateTime">
+          {{ formatDateService.formatDateTime(rowData[column.field]) }}
+        </ng-container>
+
+        <ng-container *ngIf="column.type === TYPES.status">
+          <span class="badge" ngClass="badge-{{ statusesCssClasses[rowData[column.field]] || '' }}">{{
+            rowData[column.field]
+          }}</span>
+        </ng-container>
+
+        <ng-container *ngIf="column.type === TYPES.icons">
+          <i
+            class="icon"
+            *ngFor="let icon of column.icons"
+            class="pi pi-{{ icon }}"
+            (click)="handleIconClick(rowData, icon)"></i>
+        </ng-container>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td [attr.colspan]="columns.length" class="empty-message">
+        {{ errorText || 'noData' }}
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
