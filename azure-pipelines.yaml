@@ -16,7 +16,7 @@ steps:
 - task: Npm@1
   displayName: NPM install
   inputs:
-    command: 'install'
+    command: 'install --legacy-peer-deps'
 
 - task: Npm@1
   displayName: NPM build
