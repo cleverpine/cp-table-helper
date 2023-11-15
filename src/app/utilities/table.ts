@@ -32,6 +32,7 @@ export const DEFAULT_TABLE_SETTINGS: TableSettings = {
 export enum TABLE_MATCH_MODES {
   startsWith = 'startsWith',
   contains = 'contains',
+  dateIs = 'dateIs',
   endsWith = 'endsWith',
   equals = 'equals',
   notEquals = 'notEquals',

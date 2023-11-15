@@ -14,7 +14,7 @@ export interface SortValues {
 
 export interface ColumnMultiAndSingleSelectFilterOptions {
   label: string;
-  name: string;
+  value: string;
 }
 
 export interface TableSettings {
