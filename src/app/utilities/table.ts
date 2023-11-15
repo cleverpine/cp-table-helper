@@ -28,13 +28,3 @@ export const DEFAULT_TABLE_SETTINGS: TableSettings = {
   hideFilters: true,
   excelExport: false,
 };
-
-export enum TABLE_MATCH_MODES {
-  startsWith = 'startsWith',
-  contains = 'contains',
-  dateIs = 'dateIs',
-  endsWith = 'endsWith',
-  equals = 'equals',
-  notEquals = 'notEquals',
-  notContains = 'notContains',
-}

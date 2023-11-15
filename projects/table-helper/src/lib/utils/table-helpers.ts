@@ -1,4 +1,3 @@
-import { TABLE_MATCH_MODES } from "src/app/utilities/table";
 import { ColumnMultiAndSingleSelectFilterOptions, Filter, FilterValues, SortValues } from "./table.model";
 
 export const transformSortForRequest = (criteria: SortValues[]) =>
@@ -9,18 +8,18 @@ export const transformSortForRequest = (criteria: SortValues[]) =>
 
 export const getShorthandMatchMode = (matchMode: string): string => {
   switch (matchMode) {
-    case TABLE_MATCH_MODES.startsWith:
+    case 'startsWith':
       return 'sw';
-    case TABLE_MATCH_MODES.dateIs:
-    case TABLE_MATCH_MODES.contains:
+    case 'dateIs':
+    case 'contains':
       return 'like';
-    case TABLE_MATCH_MODES.notContains:
+    case 'notContains':
       return 'neq';
-    case TABLE_MATCH_MODES.endsWith:
+    case 'endsWith':
       return 'ew';
-    case TABLE_MATCH_MODES.equals:
+    case 'equals':
       return 'eq';
-    case TABLE_MATCH_MODES.notEquals:
+    case 'notEquals':
       return 'neq';
     default:
       return matchMode;
