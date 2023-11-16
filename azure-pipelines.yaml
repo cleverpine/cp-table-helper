@@ -32,7 +32,9 @@ steps:
 - ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/main') }}:
     - script: |
         cd dist/table-helper
+        ls -la
       displayName: 'Change directory to dist/table-helper'
+
     - task: Npm@1
       displayName: NPM publish to NPM Registry
       inputs:
