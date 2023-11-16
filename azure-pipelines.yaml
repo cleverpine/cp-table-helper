@@ -29,10 +29,14 @@ steps:
     customCommand: 'run build-library'
 
 
-# CD to the dist folder
 - task: CmdLine@2
   inputs:
     script: 'cd dist/table-helper'
+
+- task: CmdLine@2
+  inputs:
+    script: "find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g"
+
 
 - ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/main') }}:
     - task: Npm@1
