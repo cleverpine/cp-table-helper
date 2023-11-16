@@ -29,23 +29,6 @@ steps:
     customCommand: 'run build-library'
 
 
-- task: CmdLine@2
-  inputs:
-    script: 'ls -la'
-
-- task: CmdLine@2
-  inputs:
-    script: 'cd dist/table-helper'
-
-- task: CmdLine@2
-  inputs:
-    script: 'ls -la'
-
-- task: CmdLine@2
-  inputs:
-    script: 'find . -print | sed -e "s;[^/]*/;|____;g;s;____|; |;g'
-
-
 - ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/main') }}:
     - script: |
         cd dist/table-helper
