@@ -34,5 +34,5 @@ steps:
       displayName: NPM publish to NPM Registry
       inputs:
         command: 'publish'
-        workingDir: 'dist/table-helper'
+        workingDir: 'dist/cp-table-helper'
         publishEndpoint: 'npm_cleverpine_dev_cicd'
