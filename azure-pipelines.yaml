@@ -29,6 +29,11 @@ steps:
     customCommand: 'run build-library'
 
 
+# CD to the dist folder
+- task: CmdLine@2
+  inputs:
+    script: 'cd dist/table-helper'
+
 - ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/main') }}:
     - task: Npm@1
       displayName: NPM publish to NPM Registry
