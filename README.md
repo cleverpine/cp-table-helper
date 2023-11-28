@@ -1,27 +1,65 @@
-# TableHelperComponent
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.1.
+# Table Helper Service
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+The Table Helper Service provides a service that can be used for sending lazy load requests to back-end and receive response back. Table sorting and filtering are also handled on back-end.
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Installation
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+To use the Table Helper Service, you need to install it as a dependency in your Angular project. Run the following command in your project's root directory:
 
-## Running unit tests
+`npm install table-helper --save`
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+This will install the library and save it as a dependency in your project's `package.json` file.
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Using the service
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+After installing the library, you need to import the Table Helper Service in your table component:
+
+`import { TableHelperService } from  'table-helper';`
+
+Afterwards, it should be added to the constructor in the following way:
+
+`private  tableHelperService: TableHelperService`
+
+And then, in the method that is used for the lazy load, it should be used in the following way:
+
+    this.tableHelperService.sendRequest(event, this.loadDataService).subscribe({
+        next: result => {
+		   // result handling goes here
+	    },
+		error: err => {
+			// error handling goest here
+		}
+    });
+
+As it can be seen in the example above, `sendRequest` accepts two parameters:
+
+ - event - from PrimeNg and is of type `TableLazyLoadEvent` and imported in the following way `import { TableLazyLoadEvent } from 'primeng/table';`
+ - this.loadDataService - where the request is called
+
+`this.loadDataService` should be defined in the following way:
+
+    loadDataService(tableSendDataParams: TableSendDataParams) {
+	    const sendDataParams = {
+		    ...tableSendDataParams
+		    // any additional params go here
+		}
+		// include the request in the return by passing the sendDataParams to it
+	    return;
+    }
+
+**NOTE**: `TableSendDataParams` has the following definition:
+
+    interface TableSendDataParams {
+	    filter?: string[];
+	    sort?: string[];
+	    page?: number;
+	    size?: number;
+    }
+
+In addition, `this.loadDataService = this.loadDataService.bind(this);` should also be added to the `ngOnInit`.
