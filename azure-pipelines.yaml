@@ -15,6 +15,7 @@ resources:
     - repository: templates
       type: git
       name: DevOps/azure-pipeline-templates
+      remote: param-setup
 
 extends:
   template: pipeline-fe-library.yaml@templates
