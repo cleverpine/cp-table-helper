@@ -21,4 +21,5 @@ extends:
   template: pipeline-fe-library.yaml@templates
   parameters:
     libraryName: 'table-helper'
+    legacyInstall: true
 
