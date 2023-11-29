@@ -5,7 +5,7 @@
 The Table Helper provides a service that can be used for sending lazy load requests to back-end and receive response back. Table sorting and filtering are also handled on back-end.
 
 
-##Table of contents
+## Table of contents
 
 - [Installation](#installation)
 - [Using the Service](#using-the-service)
