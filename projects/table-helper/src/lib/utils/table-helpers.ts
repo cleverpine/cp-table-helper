@@ -41,9 +41,9 @@ export const transformFiltersForRequest = (filters: FilterValues): string[] => {
         const shorthandMatchMode = getShorthandMatchMode(filter.matchMode);
         if (filter.value) {
           if (Array.isArray(filter.value)) {
-            for (const value of filter.value) {
-              transformedArray.push(`${key}:${shorthandMatchMode}:${value}`);
-            }
+            // when multiple values are selected, we need to use 'in' operator
+            const value = filter.value.join(';');  
+            transformedArray.push(`${key}:in:${value}`);
           } else {
             transformedArray.push(
               `${key}:${shorthandMatchMode}:${filter.value}`

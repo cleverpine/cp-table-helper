@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 import { Table, TableLazyLoadEvent } from 'primeng/table';
 
 import { buildMutliAndSingleSelectFilterOptions } from "projects/table-helper/src/lib/utils/table-helpers";
-import { TableSettings } from "projects/table-helper/src/lib/utils/table.model";
+import { TableSendDataParams, TableSettings } from "projects/table-helper/src/lib/utils/table.model";
 import { TableHelperService } from "projects/table-helper/src/public-api";
 
 import { FormatDateService } from "../utilities/formatDate.service";
@@ -54,7 +54,7 @@ export class GridComponent {
 
   @Input() gridMinWidth: string = '';
 
-  @Input() loadDataService!: (params: any) => Observable<any>;
+  @Input() loadDataService!: (params: TableSendDataParams) => Observable<any>;
 
   @Input() statusesCssClasses!: Record<string, string>;
 

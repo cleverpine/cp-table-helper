@@ -4,13 +4,23 @@ import { Observable, of } from "rxjs";
 import { TableSendDataParams, TableSettings } from "projects/table-helper/src/lib/utils/table.model";
 
 import { COLUMN_TYPES, DEFAULT_TABLE_SETTINGS } from "../utilities/table";
+import { GridColumn } from "../utilities/grid-column";
+import { FilterMatchMode } from "primeng/api";
+
+enum AircraftStatusEnum {
+  Active = 'ACTIVE',
+  Firmord = 'FIRMORD',
+  History = 'HISTORY',
+  Phasein = 'PHASEIN',
+  Phaseout = 'PHASEOUT'
+}
 
 @Component({
   selector: "example-table",
   templateUrl: "./example-table.component.html",
 })
 export class ExampleTableComponent implements OnInit {
-    columns = [
+    columns: GridColumn[] = [
     {
       field: 'type',
       propertyName: 'name',
@@ -23,6 +33,19 @@ export class ExampleTableComponent implements OnInit {
       header: 'msn',
       type: COLUMN_TYPES.textField,
       sortable: true,
+    },
+    {
+      field: 'status',
+      header: 'status',
+      type: COLUMN_TYPES.textField,
+      sortable: true,
+      filterType: 'multipleDropdown',
+      matchModeOptions: [
+        { 
+          label: 'Equals', 
+          value: FilterMatchMode.IN 
+        },
+      ]
     },
   ]
 
@@ -37,7 +60,19 @@ export class ExampleTableComponent implements OnInit {
   };
 
   ngOnInit(): void {
+    this.setFilterValues();
     this.loadDataService = this.loadDataService.bind(this);
+  }
+
+  setFilterValues() {
+    const column = this.columns.find(col => col.field === 'status');
+
+    if (column) {
+      column.multiAndSingleFilterOptions = Object.keys(AircraftStatusEnum).map(key => ({
+        label: key.toUpperCase(),
+        value: key.toUpperCase(),
+      }));
+    }
   }
 
   loadDataService(

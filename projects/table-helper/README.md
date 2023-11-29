@@ -1,11 +1,10 @@
 
 # Table Helper
 
+The Table Helper acts as a bridge between a PrimeNG table and a back-end service, simplifying the process of mapping and sending lazy load events for data retrieval on the front-end. It keeps the code clean and easy to maintain by handling the complex mapping details. This service extracts relevant information from the event, such as filtering criteria, sorting preferences, and pagination details. The data is then transformed into a format suitable for a back-end request. The transformed parameters are passed to the provided `loadDataService` method for actual data retrieval from the back-end.
 
-The Table Helper provides a service that can be used for sending lazy load requests to back-end and receive response back. Table sorting and filtering are also handled on back-end.
 
-
-##Table of contents
+## Table of contents
 
 - [Installation](#installation)
 - [Using the Service](#using-the-service)
@@ -35,7 +34,7 @@ After installing the library, you need to import the Table Helper Service in you
 
 #### Lazy load & PrimeNg
 
-In order to be able to use the service, lazy load functionality should be included in the table. It is used in cases when we need to load small chunks of data by invoking callbacks everytime for `paging`, `sorting` and `filtering` occurs. For more information on lazy load, open the following link https://primeng.org/treetable#lazyload.
+In order to be able to use the service, lazy load functionality should be included in the table. It is used in cases when we need to load small chunks of data by invoking callbacks everytime for `paging`, `sorting` and `filtering` occurs. For more information on lazy load, open the following link https://primeng.org/table#lazy-load.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**1. Define a request method**
 
@@ -44,11 +43,11 @@ Before proceeding to how to use the service for lazy loading data, we should def
     loadDataService(tableSendDataParams: TableSendDataParams) {
       const sendDataParams = {
         ...tableSendDataParams
-        // any additional params go here
+        // add any extra parameters specific to your use case
       }
       
-      // include the request in the return by passing the sendDataParams to it
-      return;
+      // Adjust this line according to your use case
+      return this.aircraftService.getAircrafts(sendDataParams);
     }
 
 **NOTE**: `TableSendDataParams` has the following definition:
