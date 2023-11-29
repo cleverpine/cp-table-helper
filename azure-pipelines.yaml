@@ -5,34 +5,20 @@ trigger:
   - release*
   - feature*
 
+pr: none
+
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- checkout: self
-  submodules: true
-  persistCredentials : true
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: DevOps/azure-pipeline-templates
 
-- task: NodeTool@0
-  inputs:
-    versionSpec: '16.x'
-  displayName: 'Install Node.js'
+extends:
+  template: pipeline-fe-library.yaml@templates
+  parameters:
+    libraryName: 'table-helper'
+    legacyInstall: true
 
-- script: npm install --legacy-peer-deps
-  displayName: 'NPM install with legacy peer dependencies'
-
-
-- task: Npm@1
-  displayName: NPM build
-  inputs:
-    command: 'custom'
-    customCommand: 'run build-library'
-
-
-- ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/main') }}:
-    - task: Npm@1
-      displayName: NPM publish to NPM Registry
-      inputs:
-        command: 'publish'
-        workingDir: 'dist/table-helper'
-        publishEndpoint: 'npm_cleverpine_dev_cicd'
