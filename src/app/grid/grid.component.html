@@ -49,6 +49,7 @@
             id="{{ 'filter' + col.field }}"
             field="{{ col.field }}"
             [matchMode]="col.matchMode"
+            [matchModeOptions]="col.matchModeOptions"
           >
           </p-columnFilter>
 
@@ -57,6 +58,7 @@
             field="{{ col.field }}"
             id="{{ 'filter' + col.field }}"
             class="hide-filter-button"
+            [matchModeOptions]="col.matchModeOptions"
           >
             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
               <p-multiSelect

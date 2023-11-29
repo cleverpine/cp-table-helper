@@ -1,5 +1,6 @@
 import { ColumnMultiAndSingleSelectFilterOptions } from "projects/table-helper/src/lib/utils/table.model";
 import { COLUMN_TYPES } from "./table";
+import { FilterMatchMode } from "primeng/api";
 
 export interface GridColumn {
   field: string;
@@ -11,4 +12,5 @@ export interface GridColumn {
   sortable?: boolean;
   multiAndSingleFilterOptions?: ColumnMultiAndSingleSelectFilterOptions[];
   filterType?: string;
+  matchModeOptions?: FilterMatchMode;
 }
